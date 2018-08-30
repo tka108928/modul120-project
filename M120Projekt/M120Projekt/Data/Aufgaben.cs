@@ -9,22 +9,24 @@ using System.Data.Entity;
 
 namespace M120Projekt.Data
 {
-    public class KlasseA
+    public class Aufgaben
     {
         #region Datenbankschicht
         [Key]
-        public Int64 KlasseAId { get; set; }
+        public Int64 AufgabenId { get; set; }
         [Required]
-        public String TextAttribut { get; set; }
+        public String Name { get; set; }
         [Required]
-        public DateTime DatumAttribut { get; set; }
+        public String Beschreibung { get; set; }
         [Required]
-        public Boolean BooleanAttribut { get; set; }
-        public Int64 KlasseBId { get; set; }
-        public KlasseB FremdschluesselObjekt { get; set; }
+        public DateTime FaelligAm { get; set; }
+        public Int64 Wichtigkeit { get; set; }
+        public DateTime Erstelldatum { get; set; }
+        public Int64 OrtId { get; set; }
+        public Ort Ort { get; set; }
         #endregion
         #region Applikationsschicht
-        public KlasseA() { }
+        public Aufgaben() { }
         [NotMapped]
         public String BerechnetesAttribut
         {
@@ -33,54 +35,54 @@ namespace M120Projekt.Data
                 return "Im Getter kann Code eingefügt werden für berechnete Attribute";
             }
         }
-        public static List<Data.KlasseA> LesenAlle()
+        public static List<Data.Aufgaben> LesenAlle()
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseA.Include(x => x.FremdschluesselObjekt) select record).ToList();
+                return (from record in context.Aufgaben.Include(x => x.Ort) select record).ToList();
             }
         }
-        public static Data.KlasseA LesenID(Int64 klasseAId)
+        public static Data.Aufgaben LesenID(Int64 klasseAId)
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseA.Include(x => x.FremdschluesselObjekt) where record.KlasseAId == klasseAId select record).FirstOrDefault();
+                return (from record in context.Aufgaben.Include(x => x.Ort) where record.AufgabenId == klasseAId select record).FirstOrDefault();
             }
         }
-        public static List<Data.KlasseA> LesenAttributGleich(String suchbegriff)
+        public static List<Data.Aufgaben> LesenAttributGleich(String suchbegriff)
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseA.Include(x => x.FremdschluesselObjekt) where record.TextAttribut == suchbegriff select record).ToList();
+                return (from record in context.Aufgaben.Include(x => x.Ort) where record.Name == suchbegriff select record).ToList();
             }
         }
-        public static List<Data.KlasseA> LesenAttributWie(String suchbegriff)
+        public static List<Data.Aufgaben> LesenAttributWie(String suchbegriff)
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseA.Include(x => x.FremdschluesselObjekt) where record.TextAttribut.Contains(suchbegriff) select record).ToList();
+                return (from record in context.Aufgaben.Include(x => x.Ort) where record.Name.Contains(suchbegriff) select record).ToList();
             }
         }
-        public static List<Data.KlasseA> LesenFremdschluesselGleich(Data.KlasseB suchschluessel)
+        public static List<Data.Aufgaben> LesenFremdschluesselGleich(Data.Ort suchschluessel)
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseA.Include(x => x.FremdschluesselObjekt) where record.FremdschluesselObjekt == suchschluessel select record).ToList();
+                return (from record in context.Aufgaben.Include(x => x.Ort) where record.Ort == suchschluessel select record).ToList();
             }
         }
         public Int64 Erstellen()
         {
-            if (this.TextAttribut == null || this.TextAttribut == "") this.TextAttribut = "leer";
+            if (this.Name == null || this.Name == "") this.Name = "leer";
             // Option mit Fehler statt Default Value
             // if (klasseA.TextAttribut == null) throw new Exception("Null ist ungültig");
-            if (this.DatumAttribut == null) this.DatumAttribut = DateTime.MinValue;
+            if (this.Beschreibung == null) this.Beschreibung = "";
             using (var context = new Data.Context())
             {
-                context.KlasseA.Add(this);
+                context.Aufgaben.Add(this);
                 //TODO Check ob mit null möglich, sonst throw Ex
-                if (this.FremdschluesselObjekt != null) context.KlasseB.Attach(this.FremdschluesselObjekt);
+                if (this.Ort != null) context.Ort.Attach(this.Ort);
                 context.SaveChanges();
-                return this.KlasseAId;
+                return this.AufgabenId;
             }
         }
         public Int64 Aktualisieren()
@@ -88,10 +90,10 @@ namespace M120Projekt.Data
             using (var context = new Data.Context())
             {
                 //TODO null Checks?
-                this.FremdschluesselObjekt = null;
+                this.Ort = null;
                 context.Entry(this).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
-                return this.KlasseAId;
+                return this.AufgabenId;
             }
         }
         public void Loeschen()
@@ -104,7 +106,7 @@ namespace M120Projekt.Data
         }
         public override string ToString()
         {
-            return KlasseAId.ToString(); // Für bessere Coded UI Test Erkennung
+            return AufgabenId.ToString(); // Für bessere Coded UI Test Erkennung
         }
         #endregion
     }

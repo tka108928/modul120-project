@@ -15,10 +15,12 @@ namespace M120Projekt
         {
             Debug.Print("--- DemoACreate ---");
             // KlasseA (lange Syntax)
-            Data.KlasseA klasseA1 = new Data.KlasseA();
-            klasseA1.TextAttribut = "Artikel 1";
-            klasseA1.DatumAttribut = DateTime.Today;
-            klasseA1.FremdschluesselObjekt = Data.KlasseB.LesenAttributWie("Artikelgruppe 1").FirstOrDefault();
+            Data.Aufgaben klasseA1 = new Data.Aufgaben();
+            klasseA1.Name = "Aufgabe 1";
+            klasseA1.Beschreibung = "lsdfklj jdfljsdkfljasd fsdkafk dfkjs sdfjs fksdfjlas dfdfgkdfgkjklsdfgkljdsflkjdfsg sdfgkdfkjdsfgkljdsfg kjdfgdfglkdgfkdfsglkdsfgkljdfg kldsfgkljdfglkjdfgkljdfg 5";
+            klasseA1.FaelligAm = DateTime.Today;
+            klasseA1.Erstelldatum = DateTime.Today;
+            klasseA1.Ort = Data.Ort.LesenAttributWie("Artikelgruppe 1").FirstOrDefault();
             Int64 klasseA1Id = klasseA1.Erstellen();
             Debug.Print("Artikel erstellt mit Id:" + klasseA1Id);
         }
@@ -27,9 +29,9 @@ namespace M120Projekt
         {
             Debug.Print("--- DemoARead ---");
             // Demo liest alle
-            foreach (Data.KlasseA klasseA in Data.KlasseA.LesenAlle())
+            foreach (Data.Aufgaben klasseA in Data.Aufgaben.LesenAlle())
             {
-                Debug.Print("Artikel Id:" + klasseA.KlasseAId + " Name:" + klasseA.TextAttribut + " Artikelgruppe:" + klasseA.FremdschluesselObjekt.TextAttribut);
+                Debug.Print("Artikel Id:" + klasseA.AufgabenId + " Name:" + klasseA.Name + " Artikelgruppe:" + klasseA.Ort.Strasse);
             }
         }
         // Update
@@ -37,16 +39,16 @@ namespace M120Projekt
         {
             Debug.Print("--- DemoAUpdate ---");
             // KlasseA ändert Attribute
-            Data.KlasseA klasseA1 = Data.KlasseA.LesenID(1);
-            klasseA1.TextAttribut = "Artikel 1 nach Update";
-            klasseA1.KlasseBId = 2;  // Wichtig: Fremdschlüssel muss über Id aktualisiert werden!
+            Data.Aufgaben klasseA1 = Data.Aufgaben.LesenID(1);
+            klasseA1.Name = "Artikel 1 nach Update";
+            klasseA1.OrtId = 2;  // Wichtig: Fremdschlüssel muss über Id aktualisiert werden!
             klasseA1.Aktualisieren();
         }
         // Delete
         public static void DemoADelete()
         {
             Debug.Print("--- DemoADelete ---");
-            Data.KlasseA.LesenID(1).Loeschen();
+            Data.Aufgaben.LesenID(1).Loeschen();
             Debug.Print("Artikel mit Id 1 gelöscht");
         }
         #endregion
@@ -56,10 +58,10 @@ namespace M120Projekt
         {
             Debug.Print("--- DemoBCreate ---");
             // KlasseB (kurze Syntax)
-            Data.KlasseB klasseB1 = new Data.KlasseB { TextAttribut = "Artikelgruppe 1", BooleanAttribut = true, DatumAttribut = DateTime.Today.AddDays(-1) };
+            Data.Ort klasseB1 = new Data.Ort { Strasse = "Artikelgruppe 1", Zeitverschiebung_in_H = 2, Nummer = 443 };
             Int64 klasseB1Id = klasseB1.Erstellen();
             Debug.Print("Gruppe erstellt mit Id:" + klasseB1Id);
-            Data.KlasseB klasseB2 = new Data.KlasseB { TextAttribut = "Artikelgruppe 2", BooleanAttribut = true, DatumAttribut = DateTime.Today };
+            Data.Ort klasseB2 = new Data.Ort { Strasse = "Artikelgruppe 2", Zeitverschiebung_in_H = 2, Nummer = 233 };
             Int64 klasseB2Id = klasseB2.Erstellen();
             Debug.Print("Gruppe erstellt mit Id:" + klasseB2Id);
         }
@@ -68,20 +70,20 @@ namespace M120Projekt
         {
             Debug.Print("--- DemoBRead ---");
             // Demo liest 1 Objekt
-            Data.KlasseB klasseB = Data.KlasseB.LesenAttributGleich("Artikelgruppe 1").FirstOrDefault();
-            Debug.Print("Auslesen einzelne Gruppe mit Name: " + klasseB.TextAttribut + " Datum" + klasseB.DatumAttribut.ToString("dd.MM.yyyy"));
+            Data.Ort klasseB = Data.Ort.LesenAttributGleich("Artikelgruppe 1").FirstOrDefault();
+            Debug.Print("Auslesen einzelne Gruppe mit Name: " + klasseB.Strasse + " Datum" + klasseB.Nummer.ToString("dd.MM.yyyy"));
             // Liste auslesen
-            foreach(Data.KlasseA klasseA in klasseB.FremdListeAttribut)
+            foreach(Data.Aufgaben klasseA in klasseB.Aufgaben)
             {
-                Debug.Print("Artikelgruppe: " + klasseB.TextAttribut + " enthält Artikel:" + klasseA.TextAttribut);
+                Debug.Print("Artikelgruppe: " + klasseB.Strasse + " enthält Artikel:" + klasseA.Name);
             }
         }
         // Update
         public static void DemoBUpdate()
         {
             Debug.Print("--- DemoBUpdate ---");
-            Data.KlasseB klasseB = Data.KlasseB.LesenID(1);
-            klasseB.TextAttribut = "Artikelgruppe 2 nach Update";
+            Data.Ort klasseB = Data.Ort.LesenID(1);
+            klasseB.Strasse = "Artikelgruppe 2 nach Update";
             klasseB.Aktualisieren();
             Debug.Print("Gruppe mit Name 'Artikelgruppe 1' verändert");
         }
@@ -92,7 +94,7 @@ namespace M120Projekt
             // Achtung! Referentielle Integrität darf nicht verletzt werden!
             try
             {
-                Data.KlasseB klasseB = Data.KlasseB.LesenID(1);
+                Data.Ort klasseB = Data.Ort.LesenID(1);
                 klasseB.Loeschen();
                 Debug.Print("Gruppe mit Id 1 gelöscht");
             } catch (Exception ex)

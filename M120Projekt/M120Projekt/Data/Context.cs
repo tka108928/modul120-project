@@ -16,10 +16,10 @@ namespace M120Projekt.Data
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<KlasseA>().ToTable("KlasseA"); // Damit kein "s" angehängt wird an Tabelle
-            modelBuilder.Entity<KlasseB>().ToTable("KlasseB"); // Damit kein "s" angehängt wird an Tabelle
+            modelBuilder.Entity<Aufgaben>().ToTable("Aufgaben"); // Damit kein "s" angehängt wird an Tabelle
+            modelBuilder.Entity<Ort>().ToTable("Ort"); // Damit kein "s" angehängt wird an Tabelle
         }
-        public DbSet<KlasseA> KlasseA { get; set; }
-        public DbSet<KlasseB> KlasseB { get; set; }
+        public DbSet<Aufgaben> Aufgaben { get; set; }
+        public DbSet<Ort> Ort { get; set; }
     }
 }

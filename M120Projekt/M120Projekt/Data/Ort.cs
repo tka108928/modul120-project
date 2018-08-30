@@ -9,21 +9,24 @@ using System.Data.Entity;
 
 namespace M120Projekt.Data
 {
-    public class KlasseB
+    public class Ort
     {
         #region Datenbankschicht
         [Key]
-        public Int64 KlasseBId { get; set; }
+        public Int64 OrtId { get; set; }
         [Required]
-        public String TextAttribut { get; set; }
+        public String Strasse { get; set; }
         [Required]
-        public DateTime DatumAttribut { get; set; }
+        public Int32 Nummer { get; set; }
         [Required]
-        public Boolean BooleanAttribut { get; set; }
-        public ICollection<KlasseA> FremdListeAttribut { get; set; }
+        public Int32 PLZ { get; set; }
+        public String Ortname { get; set; }
+        public String Land { get; set; }
+        public Int32 Zeitverschiebung_in_H { get; set; }
+        public ICollection<Aufgaben> Aufgaben { get; set; }
         #endregion
         #region Applikationsschicht
-        public KlasseB() { }
+        public Ort() { }
         [NotMapped]
         public String BerechnetesAttribut
         {
@@ -32,46 +35,46 @@ namespace M120Projekt.Data
                 return "Im Getter kann Code eingefügt werden für berechnete Attribute";
             }
         }
-        public static List<Data.KlasseB> LesenAlle()
+        public static List<Data.Ort> LesenAlle()
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseB.Include(x => x.FremdListeAttribut) select record).ToList();
+                return (from record in context.Ort.Include(x => x.Aufgaben) select record).ToList();
             }
         }
-        public static Data.KlasseB LesenID(Int64 klasseBId)
+        public static Data.Ort LesenID(Int64 klasseBId)
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseB.Include(x => x.FremdListeAttribut) where record.KlasseBId == klasseBId select record).FirstOrDefault();
+                return (from record in context.Ort.Include(x => x.Aufgaben) where record.OrtId == klasseBId select record).FirstOrDefault();
             }
         }
-        public static List<Data.KlasseB> LesenAttributGleich(String suchbegriff)
+        public static List<Data.Ort> LesenAttributGleich(String suchbegriff)
         {
             using (var context = new Data.Context())
             {
-                var klasseBquery = (from record in context.KlasseB.Include(x => x.FremdListeAttribut) where record.TextAttribut == suchbegriff select record).ToList();
+                var klasseBquery = (from record in context.Ort.Include(x => x.Aufgaben) where record.Strasse == suchbegriff select record).ToList();
                 return klasseBquery;
             }
         }
-        public static List<Data.KlasseB> LesenAttributWie(String suchbegriff)
+        public static List<Data.Ort> LesenAttributWie(String suchbegriff)
         {
             using (var context = new Data.Context())
             {
-                return (from record in context.KlasseB.Include(x => x.FremdListeAttribut) where record.TextAttribut.Contains(suchbegriff) select record).ToList();
+                return (from record in context.Ort.Include(x => x.Aufgaben) where record.Strasse.Contains(suchbegriff) select record).ToList();
             }
         }
         public Int64 Erstellen()
         {
-            if (this.TextAttribut == null || this.TextAttribut == "") this.TextAttribut = "leer";
+            if (this.Strasse == null || this.Strasse == "") this.Strasse = "leer";
             // Option mit Fehler statt Default Value
             // if (klasseB.TextAttribut == null) throw new Exception("Null ist ungültig");
-            if (this.DatumAttribut == null) this.DatumAttribut = DateTime.MinValue;
+            if (this.Nummer == null) this.Nummer = 0;
             using (var context = new Data.Context())
             {
-                context.KlasseB.Add(this);
+                context.Ort.Add(this);
                 context.SaveChanges();
-                return this.KlasseBId;
+                return this.OrtId;
             }
         }
         public void Aktualisieren()
@@ -93,7 +96,7 @@ namespace M120Projekt.Data
         }
         public override string ToString()
         {
-            return KlasseBId.ToString(); // Für bessere Coded UI Test Erkennung
+            return OrtId.ToString(); // Für bessere Coded UI Test Erkennung
         }
         #endregion
     }
