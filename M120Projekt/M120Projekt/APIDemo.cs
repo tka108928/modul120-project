@@ -17,9 +17,10 @@ namespace M120Projekt
             // KlasseA (lange Syntax)
             Data.Aufgaben klasseA1 = new Data.Aufgaben();
             klasseA1.Name = "Aufgabe 1";
-            klasseA1.Beschreibung = "lsdfklj jdfljsdkfljasd fsdkafk dfkjs sdfjs fksdfjlas dfdfgkdfgkjklsdfgkljdsflkjdfsg sdfgkdfkjdsfgkljdsfg kjdfgdfglkdgfkdfsglkdsfgkljdfg kldsfgkljdfglkjdfgkljdfg 5";
+            klasseA1.Beschreibung = "Lorem ipsum dolor Lorem ipsum dolor sit amet.";
             klasseA1.FaelligAm = DateTime.Today;
             klasseA1.Erstelldatum = DateTime.Today;
+            klasseA1.Wichtigkeit = 1;
             klasseA1.Ort = Data.Ort.LesenAttributWie("Artikelgruppe 1").FirstOrDefault();
             Int64 klasseA1Id = klasseA1.Erstellen();
             Debug.Print("Artikel erstellt mit Id:" + klasseA1Id);
@@ -58,10 +59,10 @@ namespace M120Projekt
         {
             Debug.Print("--- DemoBCreate ---");
             // KlasseB (kurze Syntax)
-            Data.Ort klasseB1 = new Data.Ort { Strasse = "Artikelgruppe 1", Zeitverschiebung_in_H = 2, Nummer = 443 };
+            Data.Ort klasseB1 = new Data.Ort { Strasse = "Artikelgruppe 1", Zeitverschiebung_in_H = 2, Nummer = 443, Land = "Deutschland", Ortname = "Berlin", PLZ = 5736 };
             Int64 klasseB1Id = klasseB1.Erstellen();
             Debug.Print("Gruppe erstellt mit Id:" + klasseB1Id);
-            Data.Ort klasseB2 = new Data.Ort { Strasse = "Artikelgruppe 2", Zeitverschiebung_in_H = 2, Nummer = 233 };
+            Data.Ort klasseB2 = new Data.Ort { Strasse = "Artikelgruppe 2", Zeitverschiebung_in_H = 2, Nummer = 233, Land = "Schweiz", Ortname = "Chäs u Brot", PLZ = 8192 };
             Int64 klasseB2Id = klasseB2.Erstellen();
             Debug.Print("Gruppe erstellt mit Id:" + klasseB2Id);
         }

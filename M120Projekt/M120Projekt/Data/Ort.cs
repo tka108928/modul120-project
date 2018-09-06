@@ -69,7 +69,6 @@ namespace M120Projekt.Data
             if (this.Strasse == null || this.Strasse == "") this.Strasse = "leer";
             // Option mit Fehler statt Default Value
             // if (klasseB.TextAttribut == null) throw new Exception("Null ist ungültig");
-            if (this.Nummer == null) this.Nummer = 0;
             using (var context = new Data.Context())
             {
                 context.Ort.Add(this);

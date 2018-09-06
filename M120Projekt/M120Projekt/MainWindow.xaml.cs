@@ -27,13 +27,13 @@ namespace M120Projekt
             // Aufruf diverse APIDemo Methoden
             APIDemo.DemoBCreate();
             APIDemo.DemoACreate();
-            APIDemo.DemoARead();
+            /*APIDemo.DemoARead();
             APIDemo.DemoBRead();
             APIDemo.DemoAUpdate();
             APIDemo.DemoARead();
             APIDemo.DemoBRead();
             APIDemo.DemoADelete();
-            APIDemo.DemoBRead();
+            APIDemo.DemoBRead();*/
         }
     }
 }
