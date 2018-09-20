@@ -1,0 +1,99 @@
+﻿<Window x:Class="Layout_Aufgabe_erstellen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Layout_Aufgabe_erstellen"
+        mc:Ignorable="d"
+        Title="Aufgabe erstellen" Height="700" Width="650" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label FontSize="25px" Width="auto" Grid.Column="1" 
+                 Grid.ColumnSpan="3" Margin="-50 10 0 0">
+            Aufgabe erstellen
+        </Label>
+        <TextBox Grid.Column="1" Margin="-50 10 0 10" Grid.Row="1" FontSize="15px"
+                 Grid.ColumnSpan="6" VerticalContentAlignment="Center" MaxLength="100">
+            Aufgabenbezeichnung
+        </TextBox>
+        <TextBox Grid.Column="1" Margin="-50 10 0 10" Grid.Row="2" FontSize="15px"
+                 AcceptsReturn="True" Grid.ColumnSpan="6" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" MaxLength="1000">
+            Beschreibung
+        </TextBox>
+        <TextBox Grid.Column="1" Margin="-50 10 50 10" Grid.Row="4" FontSize="15px"
+                 Grid.ColumnSpan="6" VerticalContentAlignment="Center" 
+                 Name="FaelligAmTxt">
+            Fällig am
+        </TextBox>
+        <DatePicker Name="datePicker"
+              SelectedDateFormat="Long" Grid.Row="4" Grid.Column="6"
+                SelectedDateChanged="setFaelligAm" Margin="20 10 0 10"/>
+        <Label FontSize="20px" Width="auto" Grid.Column="1" 
+                 Grid.ColumnSpan="3" Grid.Row="5" Margin="-50 10 0 0">
+            Ort:
+        </Label>
+        <TextBox Grid.Column="1" Margin="-50 10 0 10" Grid.Row="6" FontSize="15px"
+                 Grid.ColumnSpan="6" VerticalContentAlignment="Center" MaxLength="50">
+            Strasse und Nummer
+        </TextBox>
+        <TextBox Grid.Column="1" Margin="-50 10 0 10" Grid.Row="7" FontSize="15px"
+                 Grid.ColumnSpan="6" VerticalContentAlignment="Center" MaxLength="4">
+            PLZ
+        </TextBox>
+        <TextBox Grid.Column="1" Margin="-50 10 0 10" Grid.Row="8" FontSize="15px"
+                 Grid.ColumnSpan="6" VerticalContentAlignment="Center" MaxLength="50">
+            Ort
+        </TextBox>
+        <Button Grid.Column="1" Margin="-50 35 0 35" Grid.Row="9" FontSize="15px"
+                 Grid.RowSpan="2" VerticalContentAlignment="Center">
+            Erstellen
+        </Button>
+        <Button Grid.Column="6" Margin="-50 35 0 35" Grid.Row="9" FontSize="15px"
+                 Grid.RowSpan="2" VerticalContentAlignment="Center">
+            Abbrechen
+        </Button>
+        <Label Grid.Column="7" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="20 45 0 50">
+            Wichtigkeit:
+        </Label>
+        <Label Grid.Column="7" Grid.Row="1" Margin="25 10 0 10" Background="Green" Name="ImportantColor"/>
+        <Button Grid.Column="8" Margin="0 10 45 10" Grid.Row="1" Click="openImportantDropdown">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                </StackPanel>
+            </Button.Content>
+            <Button.ContextMenu>
+                <ContextMenu >
+                    <MenuItem Header="Unwichtig" />
+                    <MenuItem Header="Wichtig" />
+                    <MenuItem Header="Sehr wichtig" />
+                    <MenuItem Header="Erste Priorität" />
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+    </Grid>
+</Window>
